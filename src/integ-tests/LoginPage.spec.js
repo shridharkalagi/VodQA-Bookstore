@@ -22,8 +22,6 @@ describe('Login page tests', () => {
     })
 });
 
-
-
 function renderLoginPage() {
     const history = createMemoryHistory();
     return render(<Router history={history}>
