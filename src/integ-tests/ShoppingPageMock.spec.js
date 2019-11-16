@@ -4,23 +4,10 @@ import React from 'react'
 import ShoppingPage from '../components/VQStore'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import mock from './mock.json';
-jest.mock('axios');
-import axiosMock from 'axios';
+
 describe('Shopping Page tests', () => {
+    it('validate the Filtering by Mock response', async () => {
 
-    it('validate the Shopping Page UI', async () => {
-        axiosMock.mockResolvedValueOnce({
-            data: mock,
-        });
-        const { getAllByText, getByPlaceholderText, getByText ,queryByLabelText} = renderShoppingPage()
-        await waitForElement(() => getByText('Filter Authors'));
-        await waitForElement(() => queryByLabelText('Dan Brown'));
-        fireEvent.click(queryByLabelText('Rujuta Divekar'));
-        expect(getByText('Indian Superfoods Mock')).toBeDefined();
-        expect(getAllByText('Add to Cart').length).toBe(1);
-
-        expect(document.querySelectorAll('.card').length).toBe(1);
     })
 });
 

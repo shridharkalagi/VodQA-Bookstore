@@ -9,7 +9,7 @@ expect.extend({ toBeDisabled })
 describe('Login page tests', () => {
 
     it('validate the login Page UI', async () => {
-        const { getByLabelText, getByPlaceholderText, getByText } = renderLoginPage()
+        const { getByPlaceholderText, getByText } = renderLoginPage()
         await waitForElement(() => getByText('Email'));
         expect(getByText('Email')).toBeDefined();
         expect(getByPlaceholderText('Password')).toBeDefined();
@@ -17,41 +17,15 @@ describe('Login page tests', () => {
         expect(getByText('Sign In')).toBeDefined();
     })
 
-    it('validate the Error messages on clicking validate', async () => {
-        const { getByText, getByLabelText, queryByText } = renderLoginPage();
+    it('validate the Error messages are Not displayed for valid creds', async () => {
+        const { getByLabelText, queryByText } = renderLoginPage();
         fireEvent.change(getByLabelText('Email'), { target: { value: 'chuck@vodqa' } });
         fireEvent.change(getByLabelText('Password'), { target: { value: 'admin' } });
-        expect(queryByText('Please provide a valid email.')).toBeNull();
-        expect(queryByText('Please provide a valid password. (atleast 1 char)')).toBeNull();
-
     })
 
-    it('validate the Error messages on clicking validate - Negative case', async () => {
-        const { getByText, getByLabelText, queryByText } = renderLoginPage();
-        fireEvent.change(getByLabelText('Email'), { target: { value: 'chuck' } });
-        fireEvent.change(getByLabelText('Password'), { target: { value: 'admin' } });
-        expect(getByText('Please provide a valid email.')).toBeDefined();
-        expect(getByText('Sign In')).toBeDisabled();
-        expect(queryByText('Please provide a valid password. (atleast 1 char)')).toBeNull();
+    it('validate Sign In button is disabled for invalid creds', async () => {
+       
     })
-
-    it.skip('validate the Error messages on clicking validate', async () => {
-        var { getByText, getByLabelText } = renderLoginPage();
-
-        fireEvent.change(getByLabelText('Email'), { target: { value: 'chuck@aab' } });
-        fireEvent.change(getByLabelText('Password'), { target: { value: 'admin' } });
-
-        fireEvent.click(getByText('Sign In'));
-
-        const history = createMemoryHistory();
-        var { getByText } = render(<Router history={history}>
-            <NavBar></NavBar>
-        </Router>)
-        await waitForElement(() => getByText('Sign Out'));
-        expect(getByText('Sign Out')).toBeDefined();
-
-
-    });
 
 });
 
