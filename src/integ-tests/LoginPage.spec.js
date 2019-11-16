@@ -1,6 +1,7 @@
 import { fireEvent, waitForElement, render } from '@testing-library/react';
 import React from 'react'
 import LoginPage from '../components/LoginPage'
+import NavBar from '../components/NavContainer'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 describe('Login page tests', () => {
@@ -20,12 +21,34 @@ describe('Login page tests', () => {
         expect(getByText('Please provide a valid email.')).toBeDefined();
         expect(getByText('Please provide a valid password. (atleast 1 char)')).toBeDefined();
     })
+
+    it.only('validate the Error messages on clicking validate', async () => {
+        var { getByText, getByLabelText } = renderLoginPage();
+
+        fireEvent.change(getByLabelText('Email'), { target: { value: 'chuck@aab' } });
+        fireEvent.change(getByLabelText('Password'), { target: { value: 'admin' } });
+
+        fireEvent.click(getByText('Sign In'));
+
+        const history = createMemoryHistory();
+        var { getByText } = render(<Router history={history}>
+            <NavBar></NavBar>
+        </Router>)
+        await waitForElement(() => getByText('Sign Out'));
+        expect(getByText('Sign Out')).toBeDefined();
+
+
+    });
+
 });
 
 function renderLoginPage() {
     const history = createMemoryHistory();
     return render(<Router history={history}>
+        <div>
         <LoginPage></LoginPage>
+        {/* <NavBar></NavBar> */}
+        </div>
     </Router>);
 }
 
