@@ -16,13 +16,14 @@ describe('Login page tests', () => {
     })
 
     it('validate the Error messages on clicking validate', async () => {
-        const { getByText } = renderLoginPage();
-        fireEvent.click(getByText('Validate'));
-        expect(getByText('Please provide a valid email.')).toBeDefined();
-        expect(getByText('Please provide a valid password. (atleast 1 char)')).toBeDefined();
+        const { getByText,getByLabelText,queryByText } = renderLoginPage();
+        fireEvent.change(getByLabelText('Email'), { target: { value: 'chuck@vodqa' } });
+        fireEvent.change(getByLabelText('Password'), { target: { value: 'admin' } });
+        expect(queryByText('Please provide a valid email.')).toBeNull();
+        expect(queryByText('Please provide a valid password. (atleast 1 char)')).toBeDefined();
     })
 
-    it.only('validate the Error messages on clicking validate', async () => {
+    it.skip('validate the Error messages on clicking validate', async () => {
         var { getByText, getByLabelText } = renderLoginPage();
 
         fireEvent.change(getByLabelText('Email'), { target: { value: 'chuck@aab' } });
@@ -45,10 +46,7 @@ describe('Login page tests', () => {
 function renderLoginPage() {
     const history = createMemoryHistory();
     return render(<Router history={history}>
-        <div>
         <LoginPage></LoginPage>
-        {/* <NavBar></NavBar> */}
-        </div>
     </Router>);
 }
 
