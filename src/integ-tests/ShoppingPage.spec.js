@@ -9,6 +9,7 @@ describe('Shopping Page tests', () => {
     it('validate the Shopping Page UI', async () => {
         const { getByLabelText, getByPlaceholderText, getByText } = renderShoppingPage()
         await waitForElement(() => getByText('Filter Authors'));
+        
     })
 });
 

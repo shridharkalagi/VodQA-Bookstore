@@ -4,7 +4,7 @@ import OffersPAge from '../components/OffersPage'
 describe('Offers Page tests', () => {
 
     it('validate the offers', async () => {
-        const { getByLabelText, getByText } = render(
+        const { getByText } = render(
             <OffersPAge></OffersPAge>
         )
         expect(getByText('OffersPage under construction')).toBeDefined();
